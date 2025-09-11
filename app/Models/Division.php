@@ -11,6 +11,7 @@ class Division extends Model
     use HasFactory, HasTimestamps;
 
     protected $fillable = [
-        'name'
+        'name',
+        'gaji_per_hari',
     ];
 }

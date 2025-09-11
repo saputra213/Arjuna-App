@@ -308,6 +308,11 @@
           @error('form.division_id')
             <x-input-error for="form.division_id" class="mt-2" message="{{ $message }}" />
           @enderror
+          <div>
+    <label for="gaji_per_hari">Gaji per Hari</label>
+    <input type="number" name="gaji_per_hari" value="{{ old('gaji_per_hari', $division->gaji_per_hari ?? 0) }}">
+</div>
+
         </div>
         <div class="mt-4">
           <x-label for="form.job_title_id" value="{{ __('Job Title') }}" />

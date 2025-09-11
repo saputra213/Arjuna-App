@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers;
+use App\Http\Controllers\Admin\GajiController;
 use App\Http\Controllers\Admin\BarcodeController;
 use App\Http\Controllers\Admin\MasterDataController;
 use App\Http\Controllers\Admin\AttendanceController;
@@ -43,6 +44,18 @@ Route::middleware([
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
+        Route::get('/admin/gaji/rekap', [GajiController::class, 'rekap'])->name('admin.gaji.rekap');
+        Route::resource('/gaji', GajiController::class)
+        ->names([
+            'index' => 'admin.gaji.index',
+            'create' => 'admin.gaji.create',
+            'store' => 'admin.gaji.store',
+            'edit' => 'admin.gaji.edit',
+            'update' => 'admin.gaji.update',
+            'destroy' => 'admin.gaji.destroy',
+        ]);
+
+
 
         // Barcode
         Route::resource('/barcodes', BarcodeController::class)
