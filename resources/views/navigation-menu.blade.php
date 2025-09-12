@@ -25,6 +25,11 @@
             <x-nav-link class="hidden md:inline-flex" href="{{ route('admin.employees') }}" :active="request()->routeIs('admin.employees')">
               {{ __('Employee') }}
             </x-nav-link>
+            <!-- Gaji menu -->
+            <x-nav-link class="hidden md:inline-flex" href="{{ route('admin.gaji.index') }}" :active="request()->routeIs('admin.gaji.*')">
+               {{ __('Gaji') }}
+            </x-nav-link>
+            <!-- Dropdown Master Data -->
             <x-nav-dropdown :active="request()->routeIs('admin.masters.*')" triggerClasses="text-nowrap">
               <x-slot name="trigger">
                 {{ __('Master Data') }}
@@ -55,6 +60,7 @@
                 </x-dropdown-link>
               </x-slot>
             </x-nav-dropdown>
+            <!-- Dropdown Import Export -->
             <x-nav-dropdown :active="request()->routeIs('admin.import-export.*')" triggerClasses="text-nowrap">
               <x-slot name="trigger">
                 {{ __('Import & Export') }}
@@ -80,14 +86,12 @@
       <div class="flex gap-2">
         <div class="hidden sm:ms-6 sm:flex sm:items-center">
           <x-theme-toggle />
-
           <!-- Settings Dropdown -->
           <div class="relative ms-3">
             <x-dropdown align="right" width="48">
               <x-slot name="trigger">
                 @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                  <button
-                    class="flex rounded-full border-2 border-transparent text-sm transition focus:border-gray-300 focus:outline-none">
+                  <button class="flex rounded-full border-2 border-transparent text-sm transition focus:border-gray-300 focus:outline-none">
                     <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}"
                       alt="{{ Auth::user()->name }}" />
                   </button>
@@ -96,7 +100,6 @@
                     <button type="button"
                       class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:bg-gray-50 focus:outline-none active:bg-gray-50 dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300 dark:focus:bg-gray-700 dark:active:bg-gray-700">
                       {{ Auth::user()->name }}
-
                       <svg class="-me-0.5 ms-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -105,29 +108,23 @@
                   </span>
                 @endif
               </x-slot>
-
               <x-slot name="content">
                 <!-- Account Management -->
                 <div class="block px-4 py-2 text-xs text-gray-400">
                   {{ __('Manage Account') }}
                 </div>
-
                 <x-dropdown-link href="{{ route('profile.show') }}">
                   {{ __('Profile') }}
                 </x-dropdown-link>
-
                 @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
                   <x-dropdown-link href="{{ route('api-tokens.index') }}">
                     {{ __('API Tokens') }}
                   </x-dropdown-link>
                 @endif
-
                 <div class="border-t border-gray-200 dark:border-gray-600"></div>
-
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}" x-data>
                   @csrf
-
                   <x-dropdown-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
                     {{ __('Log Out') }}
                   </x-dropdown-link>
@@ -136,9 +133,7 @@
             </x-dropdown>
           </div>
         </div>
-
         <x-theme-toggle class="sm:hidden" />
-
         <!-- Hamburger -->
         <div class="-me-2 flex items-center sm:hidden">
           <button @click="open = ! open"
@@ -170,6 +165,10 @@
         </x-responsive-nav-link>
         <x-responsive-nav-link href="{{ route('admin.employees') }}" :active="request()->routeIs('admin.employees')">
           {{ __('Employee') }}
+        </x-responsive-nav-link>
+        <!-- Gaji menu mobile -->
+        <x-responsive-nav-link href="{{ route('admin.gaji.index') }}" :active="request()->routeIs('admin.gaji.*')">
+           {{ __('Gaji') }}
         </x-responsive-nav-link>
         <x-responsive-nav-link href="{{ route('admin.masters.division') }}" :active="request()->routeIs('admin.masters.division')">
           {{ __('Division') }}
@@ -220,17 +219,14 @@
         <x-responsive-nav-link href="{{ route('profile.show') }}" :active="request()->routeIs('profile.show')">
           {{ __('Profile') }}
         </x-responsive-nav-link>
-
         @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
           <x-responsive-nav-link href="{{ route('api-tokens.index') }}" :active="request()->routeIs('api-tokens.index')">
             {{ __('API Tokens') }}
           </x-responsive-nav-link>
         @endif
-
         <!-- Authentication -->
         <form method="POST" action="{{ route('logout') }}" x-data>
           @csrf
-
           <x-responsive-nav-link href="{{ route('logout') }}" @click.prevent="$root.submit();">
             {{ __('Log Out') }}
           </x-responsive-nav-link>
