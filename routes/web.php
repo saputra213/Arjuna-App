@@ -55,6 +55,9 @@ Route::middleware([
             'destroy' => 'admin.gaji.destroy',
         ]);
 
+        // Generate gaji otomatis bulan ini
+        Route::post('/gaji/generate', [GajiController::class, 'generate'])
+            ->name('admin.gaji.generate');
 
 
         // Barcode

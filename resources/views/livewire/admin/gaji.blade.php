@@ -1,3 +1,4 @@
+</x-app-layout>
   <div class="py-12">
     <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
       <div class="bg-white shadow-xl dark:bg-gray-800 sm:rounded-lg">
@@ -5,6 +6,12 @@
           <div class="mb-4">
             <a href="{{ route('admin.gaji.create') }}" class="px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">
               + Tambah Gaji
+            </a>
+            <a>
+            <form action="{{ route('admin.gaji.generate') }}" method="POST" style="display:inline;">
+                @csrf
+                <button type="submit" class="btn btn-success">Generate Gaji </button>
+            </form>
             </a>
           </div>
 
