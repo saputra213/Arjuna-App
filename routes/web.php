@@ -44,6 +44,7 @@ Route::middleware([
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
         })->name('admin.dashboard');
+        Route::post('/admin/gaji/persentase', [GajiController::class, 'updatePersentase'])->name('admin.gaji.persentase');
         Route::get('/admin/gaji/rekap', [GajiController::class, 'rekap'])->name('admin.gaji.rekap');
         Route::resource('/gaji', GajiController::class)
         ->names([

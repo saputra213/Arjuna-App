@@ -232,4 +232,24 @@ class GajiController extends Controller
 
         return redirect()->route('admin.gaji.index')->with('success', 'Gaji bulan ini berhasil digenerate.');
     }
+
+    public function updatePersentase(Request $request)
+{
+    $request->validate([
+        'persentase' => 'required|integer|min:0|max:100',
+        'periode'    => 'required|string'
+    ]);
+
+    // Update persentase di periode tertentu
+    $gaji = Gaji::where('periode', $request->periode)->get();
+
+    foreach ($gaji as $row) {
+        $row->persentase = $request->persentase;
+        $row->total_gaji = ($row->gaji_pokok + $row->tunjangan - $row->potongan) * ($request->persentase / 100);
+        $row->save();
+    }
+
+    return redirect()->back()->with('success', 'Persentase gaji berhasil diperbarui!');
+}
+
 }
