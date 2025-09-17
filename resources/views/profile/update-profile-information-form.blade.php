@@ -159,9 +159,9 @@
       <x-select id="division" class="mt-1 block w-full" wire:model="state.division_id">
         <option value="">{{ __('Select Division') }}</option>
         @foreach (App\Models\Division::all() as $division)
-          <option value="{{ $division->id }}" {{ $division->id == $state['division_id'] ? 'selected' : '' }}>
+          <!-- <option value="{{ $division->id }}" {{ $division->id == $state['division_id'] ? 'selected' : '' }}>
             {{ $division->name }}
-          </option>
+          </option> -->
         @endforeach
       </x-select>
       <x-input-error for="division" class="mt-2" />
@@ -187,9 +187,9 @@
       <x-select id="job_title" class="mt-1 block w-full" wire:model="state.job_title_id">
         <option value="">{{ __('Select Job Title') }}</option>
         @foreach (App\Models\JobTitle::all() as $job_title)
-          <option value="{{ $job_title->id }}" {{ $job_title->id == $state['job_title_id'] ? 'selected' : '' }}>
+          <!-- <option value="{{ $job_title->id }}" {{ $job_title->id == $state['job_title_id'] ? 'selected' : '' }}>
             {{ $job_title->name }}
-          </option>
+          </option> -->
         @endforeach
       </x-select>
       <x-input-error for="job_title" class="mt-2" />

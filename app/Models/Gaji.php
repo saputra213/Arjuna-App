@@ -26,5 +26,12 @@ class Gaji extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function cabang()
+{
+    return $this->belongsTo(\App\Models\Cabang::class, 'cabang_id');
+}
+
+
+
 }
 ?>

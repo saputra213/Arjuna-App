@@ -34,6 +34,25 @@
               </select>
             </div>
 
+            {{-- ✅ Tambahan Filter Cabang --}}
+    <div>
+      <label class="block text-sm text-gray-700 dark:text-gray-300">Cabang</label>
+      <select name="cabang_id" class="mt-1 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
+        <option value="">-- Semua Cabang --</option>
+        @foreach($cabang as $c)
+          <option value="{{ $c->id }}" {{ request('cabang_id') == $c->id ? 'selected' : '' }}>
+            {{ $c->nama_cabang }}
+          </option>
+        @endforeach
+      </select>
+    </div>
+
+    <div class="flex items-end">
+      <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+        Tampilkan
+      </button>
+    </div>
+
             <div class="flex items-end">
               <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
                 Tampilkan

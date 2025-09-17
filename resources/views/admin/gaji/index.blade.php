@@ -43,6 +43,19 @@
                 Terapkan
               </button>
             </form>
+
+            <form method="GET" action="{{ route('admin.gaji.index') }}" class="flex items-center gap-2">
+        <select name="cabang_id" class="border rounded px-2 py-1">
+            <option value=""> Semua Cabang </option>
+            @foreach($cabang as $c)
+                <option value="{{ $c->id }}" {{ $cabangId == $c->id ? 'selected' : '' }}>
+                    {{ $c->nama_cabang }}
+                </option>
+            @endforeach
+        </select>
+
+        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">Filter</button>
+    </form>
           </div>
 
           {{-- ✅ Tabel Rekap Gaji --}}

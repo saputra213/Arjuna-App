@@ -77,11 +77,29 @@ class GajiController extends Controller
         return view('admin.gaji.rekap', compact('rekap', 'bulan', 'tahun'));
     }
 
-    public function index()
-    {
-        $gaji = Gaji::with('user')->orderBy('created_at','desc')->get();
-        return view('admin.gaji.index', compact('gaji'));
+    public function index(Request $request)
+{
+    $cabangId = $request->get('cabang_id');
+    $bulan = $request->get('bulan', now()->month);
+    $tahun = $request->get('tahun', now()->year);
+
+    // Ambil semua cabang untuk dropdown
+    $cabang = \App\Models\Cabang::all();
+
+    // Query gaji + filter
+    $query = Gaji::with(['user', 'cabang'])
+        ->whereMonth('created_at', $bulan)
+        ->whereYear('created_at', $tahun);
+
+    if ($cabangId) {
+        $query->where('cabang_id', $cabangId);
     }
+
+    $gaji = $query->orderBy('created_at','desc')->get();
+
+    return view('admin.gaji.index', compact('gaji', 'cabang', 'bulan', 'tahun', 'cabangId'));
+}
+
 
     public function create()
     {
