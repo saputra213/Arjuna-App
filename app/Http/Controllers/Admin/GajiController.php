@@ -6,14 +6,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Gaji;
 use App\Models\User;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\GajiExport;
+
 
 class GajiController extends Controller
 {
-    public function show($id)
-    {
-        $gaji = \App\Models\Gaji::with('user')->findOrFail($id);
-        return view('admin.gaji.show', compact('gaji'));
-    }
 
     public function rekap(Request $request)
     {
@@ -79,6 +77,8 @@ class GajiController extends Controller
 
     public function index(Request $request)
 {
+   
+
     $cabangId = $request->get('cabang_id');
     $bulan = $request->get('bulan', now()->month);
     $tahun = $request->get('tahun', now()->year);
@@ -96,6 +96,8 @@ class GajiController extends Controller
     }
 
     $gaji = $query->orderBy('created_at','desc')->get();
+    //$gaji = Gaji::with('user')->latest()->paginate(10);
+    $gaji = $query->paginate(10);
 
     return view('admin.gaji.index', compact('gaji', 'cabang', 'bulan', 'tahun', 'cabangId'));
 }
@@ -269,5 +271,24 @@ class GajiController extends Controller
 
     return redirect()->back()->with('success', 'Persentase gaji berhasil diperbarui!');
 }
+
+
+    public function show($id)
+    {
+        $gaji = Gaji::with('user')->findOrFail($id);
+        return view('admin.gaji.show', compact('gaji'));
+    }
+
+    // ✅ Method export Excel
+    public function export(Request $request)
+    {
+        $bulan = $request->get('bulan', now()->month);
+        $tahun = $request->get('tahun', now()->year);
+
+        // bentuk periode "2025-09"
+        $periode = sprintf('%04d-%02d', $tahun, $bulan);
+
+        return Excel::download(new GajiExport($periode), "gaji-{$periode}.xlsx");
+    }
 
 }
