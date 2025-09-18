@@ -27,56 +27,69 @@
 
             {{-- ✅ Form Persentase Gaji --}}
             <form action="{{ route('admin.gaji.persentase') }}" method="POST" class="flex items-end gap-2">
-              @csrf
-              <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Persentase</label>
-                <input type="number" name="persentase" 
-                       value="{{ old('persentase', $gaji->first()->persentase ?? 100) }}" 
-                       min="0" max="100"
-                       class="mt-1 block w-24 rounded-md border-gray-300 shadow-sm 
-                              focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm 
-                              dark:bg-gray-700 dark:text-white">
-              </div>
-              <input type="hidden" name="periode" value="{{ $gaji->first()->periode ?? '' }}">
-              <button type="submit" 
-                      class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
-                Terapkan
-              </button>
+                @csrf
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">Persentase</label>
+                    <input type="number" name="persentase" 
+                          value="{{ old('persentase', $gaji->first()->persentase ?? 100) }}" 
+                          min="0" max="100"
+                          class="mt-1 block w-24 rounded-md border-gray-300 shadow-sm 
+                                  focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm 
+                                  dark:bg-gray-700 dark:text-white"
+                          onchange="this.form.submit()">
+                </div>
+
+                <input type="hidden" name="periode" value="{{ $gaji->first()->periode ?? '' }}">
             </form>
 
+
             <form method="GET" action="{{ route('admin.gaji.index') }}" class="flex items-center gap-2">
-              <select name="cabang_id" class="border rounded px-2 py-1">
-                  <option value=""> Semua Cabang </option>
-                  @foreach($cabang as $c)
-                      <option value="{{ $c->id }}" {{ $cabangId == $c->id ? 'selected' : '' }}>
-                          {{ $c->nama_cabang }}
-                      </option>
-                  @endforeach
-              </select>
-              <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">Filter</button>
+                <select name="cabang_id" class="border rounded px-7 py-2" onchange="this.form.submit()">
+                    <option value=""> Semua Cabang </option>
+                    @foreach($cabang as $c)
+                        <option value="{{ $c->id }}" {{ $cabangId == $c->id ? 'selected' : '' }}>
+                            {{ $c->nama_cabang }}
+                        </option>
+                    @endforeach
+                </select>
+            </form>
+
+
+            {{-- ✅ Filter Bulan & Tahun untuk Tabel --}}
+            <form method="GET" action="{{ route('admin.gaji.index') }}" class="flex gap-2">
+                <select name="bulan" 
+                  class="border rounded-lg px-4 py-2 text-base" 
+                  onchange="this.form.submit()">
+                    @for ($i = 1; $i <= 12; $i++)
+                        <option value="{{ $i }}" {{ request('bulan', date('m')) == $i ? 'selected' : '' }}>
+                            {{ DateTime::createFromFormat('!m', $i)->format('F') }}
+                        </option>
+                    @endfor
+                </select>
+
+                <select name="tahun" 
+                  class="border rounded-lg px-4 py-2 text-base" 
+                  onchange="this.form.submit()">
+                    @for ($i = date('Y'); $i >= 2020; $i--)
+                        <option value="{{ $i }}" {{ request('tahun', date('Y')) == $i ? 'selected' : '' }}>
+                            {{ $i }}
+                        </option>
+                    @endfor
+                </select>
             </form>
 
             {{-- ✅ Tombol Export Excel --}}
-            <<form action="{{ route('admin.gaji.export') }}" method="GET" class="flex gap-2">
-    <select name="bulan" class="border rounded p-1">
-        @for ($i = 1; $i <= 12; $i++)
-            <option value="{{ $i }}" {{ $i == date('m') ? 'selected' : '' }}>
-                {{ DateTime::createFromFormat('!m', $i)->format('F') }}
-            </option>
-        @endfor
-    </select>
+            <form action="{{ route('admin.gaji.export') }}" method="GET" class="flex gap-2">
+                <input type="hidden" name="bulan" value="{{ request('bulan', date('m')) }}">
+                <input type="hidden" name="tahun" value="{{ request('tahun', date('Y')) }}">
+                
+                <button type="submit" 
+                        class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
+                    Export Excell
+                </button>
+            </form>
 
-    <select name="tahun" class="border rounded p-1">
-        @for ($i = date('Y'); $i >= 2020; $i--)
-            <option value="{{ $i }}">{{ $i }}</option>
-        @endfor
-    </select>
 
-    <button type="submit" 
-            class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
-        Export Excel
-    </button>
-</form>
 
           </div>
 
