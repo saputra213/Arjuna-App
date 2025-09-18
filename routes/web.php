@@ -40,6 +40,7 @@ Route::middleware([
 
     // ADMIN AREA
     Route::prefix('admin')->middleware('admin')->group(function () {
+        Route::get('gaji/export', [GajiController::class, 'export'])->name('admin.gaji.export');
         Route::get('/', fn () => redirect('/admin/dashboard'));
         Route::get('/dashboard', function () {
             return view('admin.dashboard');
@@ -56,6 +57,11 @@ Route::middleware([
             'update' => 'admin.gaji.update',
             'destroy' => 'admin.gaji.destroy',
         ]);
+
+        // Export Excel Gaji
+Route::get('/gaji/export', [GajiController::class, 'export'])
+    ->name('admin.gaji.export');
+
 
         // Generate gaji otomatis bulan ini
         Route::post('/gaji/generate', [GajiController::class, 'generate'])

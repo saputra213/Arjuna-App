@@ -45,17 +45,39 @@
             </form>
 
             <form method="GET" action="{{ route('admin.gaji.index') }}" class="flex items-center gap-2">
-        <select name="cabang_id" class="border rounded px-2 py-1">
-            <option value=""> Semua Cabang </option>
-            @foreach($cabang as $c)
-                <option value="{{ $c->id }}" {{ $cabangId == $c->id ? 'selected' : '' }}>
-                    {{ $c->nama_cabang }}
-                </option>
-            @endforeach
-        </select>
+              <select name="cabang_id" class="border rounded px-2 py-1">
+                  <option value=""> Semua Cabang </option>
+                  @foreach($cabang as $c)
+                      <option value="{{ $c->id }}" {{ $cabangId == $c->id ? 'selected' : '' }}>
+                          {{ $c->nama_cabang }}
+                      </option>
+                  @endforeach
+              </select>
+              <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">Filter</button>
+            </form>
 
-        <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded">Filter</button>
-    </form>
+            {{-- ✅ Tombol Export Excel --}}
+            <<form action="{{ route('admin.gaji.export') }}" method="GET" class="flex gap-2">
+    <select name="bulan" class="border rounded p-1">
+        @for ($i = 1; $i <= 12; $i++)
+            <option value="{{ $i }}" {{ $i == date('m') ? 'selected' : '' }}>
+                {{ DateTime::createFromFormat('!m', $i)->format('F') }}
+            </option>
+        @endfor
+    </select>
+
+    <select name="tahun" class="border rounded p-1">
+        @for ($i = date('Y'); $i >= 2020; $i--)
+            <option value="{{ $i }}">{{ $i }}</option>
+        @endfor
+    </select>
+
+    <button type="submit" 
+            class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600">
+        Export Excel
+    </button>
+</form>
+
           </div>
 
           {{-- ✅ Tabel Rekap Gaji --}}
