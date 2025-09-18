@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Livewire\Forms\UserForm;
+use App\Models\Cabang;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Laravel\Jetstream\InteractsWithBanner;
@@ -100,6 +101,11 @@ class EmployeeComponent extends Component
             ->when($this->education, fn (Builder $q) => $q->where('education_id', $this->education))
             ->orderBy('name')
             ->paginate(20);
-        return view('livewire.admin.employees', ['users' => $users]);
+        $cabangs = \App\Models\Cabang::all(); // tambahkan ini
+
+    return view('livewire.admin.employees', [
+        'users' => $users,
+        'cabangs' => $cabangs, // kirim ke blade
+    ]);
     }
 }

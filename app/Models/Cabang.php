@@ -11,5 +11,11 @@ class Cabang extends Model
     {
         return $this->hasMany(Gaji::class, 'cabang_id');
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class, 'cabang_id');
+    }
+
 }
 ?>

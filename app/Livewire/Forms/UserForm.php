@@ -4,6 +4,7 @@ namespace App\Livewire\Forms;
 
 use Livewire\Form;
 use App\Models\User;
+use App\Models\Cabang;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -27,6 +28,7 @@ class UserForm extends Form
     public $education_id = null;
     public $job_title_id = null;
     public $photo = null;
+    public ?int $cabang_id = null;
 
     public function rules()
     {
@@ -57,6 +59,7 @@ class UserForm extends Form
             'education_id' => ['nullable', 'exists:educations,id'],
             'job_title_id' => ['nullable', 'exists:job_titles,id'],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'cabang_id' => ['required', 'exists:cabangs,id'],
         ];
     }
 
@@ -67,6 +70,7 @@ class UserForm extends Form
         $this->nip = $user->nip;
         $this->email = $user->email;
         $this->phone = $user->phone;
+        $this->cabang_id = $user->cabang_id;
         if ($this->isAllowed()) {
             $this->password = $user->raw_password;
         }
