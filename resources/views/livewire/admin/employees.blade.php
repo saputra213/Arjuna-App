@@ -308,10 +308,30 @@
           @error('form.division_id')
             <x-input-error for="form.division_id" class="mt-2" message="{{ $message }}" />
           @enderror
-          <div>
-    <label for="gaji_per_hari">Gaji per Hari</label>
-    <input type="number" name="gaji_per_hari" value="{{ old('gaji_per_hari', $division->gaji_per_hari ?? 0) }}">
+          <div class="mt-4">
+  <x-label for="form.cabang_id" value="{{ __('Cabang') }}" />
+  <x-select id="form.cabang_id" class="mt-1 block w-full" wire:model="form.cabang_id">
+    <option value="">{{ __('Pilih Cabang') }}</option>
+    @foreach (App\Models\Cabang::all() as $cabang)
+      <option value="{{ $cabang->id }}" {{ $cabang->id == $form->cabang_id ? 'selected' : '' }}>
+        {{ $cabang->nama_cabang }}
+      </option>
+    @endforeach
+  </x-select>
+  @error('form.cabang_id')
+    <x-input-error for="form.cabang_id" class="mt-2" message="{{ $message }}" />
+  @enderror
 </div>
+
+          <div class="w-full">
+  <x-label for="form.gaji_per_hari">{{ __('Gaji per Hari') }}</x-label>
+  <x-input id="form.gaji_per_hari" class="mt-1 block w-full" type="number" 
+           wire:model="form.gaji_per_hari" placeholder="Masukkan gaji per hari" />
+  @error('form.gaji_per_hari')
+    <x-input-error for="form.gaji_per_hari" class="mt-2" message="{{ $message }}" />
+  @enderror
+</div>
+
 
         </div>
         <div class="mt-4">
@@ -516,6 +536,21 @@
             <x-input-error for="form.division_id" class="mt-2" message="{{ $message }}" />
           @enderror
         </div>
+        <div class="mt-4">
+  <x-label for="form.cabang_id" value="{{ __('Cabang') }}" />
+  <x-select id="form.cabang_id" class="mt-1 block w-full" wire:model="form.cabang_id">
+    <option value="">{{ __('Pilih Cabang') }}</option>
+    @foreach (App\Models\Cabang::all() as $cabang)
+      <option value="{{ $cabang->id }}" {{ $cabang->id == $form->cabang_id ? 'selected' : '' }}>
+        {{ $cabang->nama_cabang }}
+      </option>
+    @endforeach
+  </x-select>
+  @error('form.cabang_id')
+    <x-input-error for="form.cabang_id" class="mt-2" message="{{ $message }}" />
+  @enderror
+</div>
+
         <div class="mt-4">
           <x-label for="form.job_title_id" value="{{ __('Job Title') }}" />
           <x-select id="form.job_title_id" class="mt-1 block w-full" wire:model="form.job_title_id">
