@@ -29,6 +29,9 @@
             <x-nav-link class="hidden md:inline-flex" href="{{ route('admin.gaji.index') }}" :active="request()->routeIs('admin.gaji.*')">
                {{ __('Gaji') }}
             </x-nav-link>
+            <x-nav-link class="hidden md:inline-flex" href="{{ route('admin.inventory.index')}}" :active="request()->routeIs('admin.inventory.index')">
+               {{ __('Inventory') }}
+            </x-nav-link>
             <!-- Dropdown Master Data -->
             <x-nav-dropdown :active="request()->routeIs('admin.masters.*')" triggerClasses="text-nowrap">
               <x-slot name="trigger">
@@ -169,6 +172,9 @@
         <!-- Gaji menu mobile -->
         <x-responsive-nav-link href="{{ route('admin.gaji.index') }}" :active="request()->routeIs('admin.gaji.*')">
            {{ __('Gaji') }}
+        </x-responsive-nav-link>
+        <x-responsive-nav-link href="{{ route('admin.inventory.index') }}" :active="request()->routeIs('admin.inventory.index')">
+            {{ __('Inventory') }}
         </x-responsive-nav-link>
         <x-responsive-nav-link href="{{ route('admin.masters.division') }}" :active="request()->routeIs('admin.masters.division')">
           {{ __('Division') }}

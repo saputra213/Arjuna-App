@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers;
+use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\GajiController;
 use App\Http\Controllers\Admin\BarcodeController;
 use App\Http\Controllers\Admin\MasterDataController;
@@ -40,6 +41,7 @@ Route::middleware([
 
     // ADMIN AREA
     Route::prefix('admin')->middleware('admin')->group(function () {
+        Route::get('/inventory', function () {return view('admin.inventory.index');})->name('admin.inventory.index');
         Route::get('gaji/export', [GajiController::class, 'export'])->name('admin.gaji.export');
         Route::get('/', fn () => redirect('/admin/dashboard'));
         Route::get('/dashboard', function () {
