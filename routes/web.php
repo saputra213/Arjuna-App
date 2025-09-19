@@ -14,21 +14,25 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
-Route::get('/', function () {
-    // return view('welcome');
-    return redirect('/login');
-});
+use App\Livewire\CompanyProfile;
+
+// ROUTE PUBLIC / LANDING PAGE
+Route::get('/', CompanyProfile::class)->name('landing');
+
 
 Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/', fn () => Auth::user()->isAdmin ? redirect('/admin') : redirect('/home'));
+            'auth:sanctum',
+            config('jetstream.auth_session'),
+            'verified',
+        ])->group(function () {
+            Route::get('/dashboard', fn () => Auth::user()->isAdmin ? redirect('/admin') : redirect('/home'))
+                ->name('dashboard');
+
 
     // USER AREA
     Route::middleware('user')->group(function () {
-        Route::get('/home', HomeController::class)->name('home');
+    Route::get('/home', HomeController::class)->name('user.home');
+
 
         Route::get('/apply-leave', [UserAttendanceController::class, 'applyLeave'])
             ->name('apply-leave');
