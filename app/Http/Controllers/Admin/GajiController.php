@@ -12,7 +12,6 @@ use App\Exports\GajiExport;
 
 class GajiController extends Controller
 {
-
     public function rekap(Request $request)
     {
         $bulan = $request->input('bulan', now()->month);
